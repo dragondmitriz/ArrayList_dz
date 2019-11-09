@@ -6,25 +6,38 @@ import java.util.ArrayList;
 /**
  * Created by user on 08.11.2019.
  */
-public class ArrayList_dz extends AbstractList<T> implements List<T>{
+public class ArrayList_dz<T> extends AbstractList<T> {
 
-    int size=0;
+    int size = 0;//размерность коллекции
 
-    Object mass[];
+    Object array[];//рабочий массив коллекции
 
     public ArrayList_dz(int length) {
-        size=length;
-        mass=new Object[length];
+        size = length;
+        array = new Object[length];
     }
 
-    @Override
     public T get(int index) {
-        T obj = mass[index];
-        return obj;
+        return (T) array[index];
+    }
+
+    public T set(int index, T element) {
+        T oldElement = get(index);
+        array[index] = element;
+        return oldElement;
     }
 
     @Override
     public int size() {
         return size;
     }
+
+    //добавить элемент в струкутуру данных
+    //добавить все элементы любой коллекции
+    //удалить элемент из структуры данных
+    //удалить все элементы указанной коллекции
+    //очистить коллекцию
+    //вернуть количество элементов коллекции
+    //Iterable и своя реализация итератора
+
 }
