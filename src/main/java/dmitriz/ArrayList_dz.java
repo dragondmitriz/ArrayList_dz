@@ -2,11 +2,13 @@ package dmitriz;
 
 import java.util.AbstractList;
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by user on 08.11.2019.
  */
-public class ArrayList_dz<T> extends AbstractList<T> {
+public class ArrayList_dz<T> extends AbstractList<T> implements List<T> {
 
     int size = 0;//размерность коллекции
 
@@ -33,6 +35,8 @@ public class ArrayList_dz<T> extends AbstractList<T> {
     }
 
     //добавить элемент в струкутуру данных
+
+
     //добавить все элементы любой коллекции
     //удалить элемент из структуры данных
     //удалить все элементы указанной коллекции
