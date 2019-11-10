@@ -27,6 +27,7 @@ public class ArrayList_dz<T> {
         return oldElement;
     }
 
+    //вернуть количество элементов коллекции
     public int size() {
         return size;
     }
@@ -75,10 +76,12 @@ public class ArrayList_dz<T> {
     //удалить элемент из структуры данных
     public void remove(int index) {
         System.arraycopy(array, index + 1, array, index, size - index - 1);
+        size--;
     }
 
     //удалить все элементы указанной коллекции
     public void removeAll(Collection<T> collection) {
+        int count = collection.size();
         for (int i = 0; i < size; i++) {
             for (T item : collection) {
                 if (item.equals(array[i])) {
@@ -88,14 +91,18 @@ public class ArrayList_dz<T> {
                 }
             }
         }
+        size -= count;
     }
 
     //очистить коллекцию
     public void clear() {
-
+        for (int i = 0; i < size; i++) {
+            array[i] = null;
+        }
+        array = new Object[0];
+        size = 0;
     }
 
-    //вернуть количество элементов коллекции
     //Iterable и своя реализация итератора
 
 }
