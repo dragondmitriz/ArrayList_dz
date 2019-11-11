@@ -1,56 +1,76 @@
 package dmitriz;
 
-import java.lang.reflect.Array;
 import java.util.*;
-import java.util.function.Consumer;
 
 /**
  * Created by user on 08.11.2019.
  */
-public class ArrayList_dz<T> implements Iterable<T> {
+public class MyArrayList<T> extends AbstractList<T> implements Iterable<T> {
 
-    int size = 0;//размерность коллекции
+    private int size = 0;//размерность коллекции
 
     Object array[];//рабочий массив коллекции
 
-    public ArrayList_dz(int length) {
+    private boolean validationSize(int next_size) {
+        if (next_size >= array.length) {
+            resize(next_size);
+        }
+        return true;
+    }
+
+    private void resize(int next_size) {
+        int new_size = size + size >> 1;
+        if (next_size > new_size) {
+            new_size = next_size;
+        }
+        array = Arrays.copyOf(array, new_size);
+    }
+
+    public MyArrayList() {
+        size = 0;
+        array = new Object[0];
+    }
+
+    public MyArrayList(int length) {
         size = length;
         array = new Object[length];
     }
 
+    @Override
     public T get(int index) {
+        if (index >= size) {
+            throw new ArrayIndexOutOfBoundsException();
+        }
         return (T) array[index];
     }
 
+    @Override
     public T set(int index, T element) {
+        if (index > size) {
+            throw new ArrayIndexOutOfBoundsException();
+        } else if (index == size) {
+            validationSize(size + 1);
+        }
         T oldElement = get(index);
         array[index] = element;
         return oldElement;
     }
 
     //вернуть количество элементов коллекции
+    @Override
     public int size() {
         return size;
     }
 
-    private boolean validationSize(int new_size) {
-        if (new_size >= array.length) {
-            resize();
-        }
+    //добавить элемент в струкутуру данных
+    @Override
+    public boolean add(T element) {
+        validationSize(size + 1);
+        array[size++] = element;
         return true;
     }
 
-    private void resize() {
-        int new_size = size >> 1;
-        array = Arrays.copyOf(array, new_size);
-    }
-
-    //добавить элемент в струкутуру данных
-    public void add(T element) {
-        validationSize(size + 1);
-        array[size++] = element;
-    }
-
+    @Override
     public void add(int index, T element) {
         validationSize(size + 1);
         System.arraycopy(array, index, array, index + 1, size - index);
@@ -59,43 +79,53 @@ public class ArrayList_dz<T> implements Iterable<T> {
     }
 
     //добавить все элементы любой коллекции
-    public void addAll(Collection<T> collection) {
+    @Override
+    public boolean addAll(Collection<? extends T> collection) {
         validationSize(size + collection.size());
         for (T item : collection) {
             array[size++] = item;
         }
+        return true;
     }
 
-    public void addAll(int index, Collection<T> collection) {
+    @Override
+    public boolean addAll(int index, Collection<? extends T> collection) {
         validationSize(size + collection.size());
         System.arraycopy(array, index, array, index + collection.size(), size - index);
         for (T item : collection) {
-            array[size++] = item;
+            array[index++] = item;
+            size++;
         }
+        return true;
     }
 
     //удалить элемент из структуры данных
-    public void remove(int index) {
+    @Override
+    public T remove(int index) {
+        T remove_element = (T) array[index];
         System.arraycopy(array, index + 1, array, index, size - index - 1);
         size--;
+        return remove_element;
     }
 
     //удалить все элементы указанной коллекции
-    public void removeAll(Collection<T> collection) {
+    @Override
+    public boolean removeAll(Collection<?> collection) {
+        Object[] arr_collection = collection.toArray();
         int count = collection.size();
         for (int i = 0; i < size; i++) {
-            for (T item : collection) {
+            for (Object item : collection) {
                 if (item.equals(array[i])) {
                     remove(i--);
-                    collection.remove(item);
                     break;
                 }
             }
         }
-        size -= count;
+        return true;
     }
 
     //очистить коллекцию
+    @Override
     public void clear() {
         for (int i = 0; i < size; i++) {
             array[i] = null;
@@ -130,15 +160,7 @@ public class ArrayList_dz<T> implements Iterable<T> {
 
         @Override
         public void remove() {
-            ArrayList_dz.this.remove(cursor - 1);
-        }
-
-        @Override
-        public void forEachRemaining(Consumer<? super T> action) {
-            int i = cursor;
-            while (i < size) {
-                action.accept((T) array[i++]);
-            }
+            MyArrayList.this.remove(cursor - 1);
         }
     }
 }
