@@ -2,11 +2,12 @@ package dmitriz;
 
 import java.lang.reflect.Array;
 import java.util.*;
+import java.util.function.Consumer;
 
 /**
  * Created by user on 08.11.2019.
  */
-public class ArrayList_dz<T> {
+public class ArrayList_dz<T> implements Iterable<T> {
 
     int size = 0;//размерность коллекции
 
@@ -104,5 +105,40 @@ public class ArrayList_dz<T> {
     }
 
     //Iterable и своя реализация итератора
+    @Override
+    public Iterator<T> iterator() {
+        return new Iterator_dz();
+    }
 
+    private class Iterator_dz<T> implements Iterator<T> {
+
+        int cursor;
+
+        public Iterator_dz() {
+            cursor = 0;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return cursor != size;
+        }
+
+        @Override
+        public T next() {
+            return (T) array[cursor++];
+        }
+
+        @Override
+        public void remove() {
+            ArrayList_dz.this.remove(cursor - 1);
+        }
+
+        @Override
+        public void forEachRemaining(Consumer<? super T> action) {
+            int i = cursor;
+            while (i < size) {
+                action.accept((T) array[i++]);
+            }
+        }
+    }
 }
