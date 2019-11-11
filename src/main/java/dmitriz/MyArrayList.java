@@ -44,7 +44,6 @@ public class MyArrayList<T> extends AbstractList<T> implements Iterable<T> {
         return (T) array[index];
     }
 
-    @Override
     public T set(int index, T element) {
         if (index > size) {
             throw new ArrayIndexOutOfBoundsException();
