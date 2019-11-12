@@ -30,7 +30,7 @@ public class MyArrayList_Test {
 
     @Test
     public void get() {
-        Assert.assertEquals(list_dz.get(1), 1);
+        Assert.assertEquals(1, list_dz.get(1));
     }
 
     @Test
@@ -61,7 +61,7 @@ public class MyArrayList_Test {
         List finalCollect = new ArrayList<Integer>(list_dz);
         finalCollect.addAll(collection);
         list_dz.addAll(collection);
-        Assert.assertEquals(list_dz, finalCollect);
+        Assert.assertEquals(finalCollect, list_dz);
     }
 
     @Test
@@ -69,7 +69,7 @@ public class MyArrayList_Test {
         List finalCollect = new ArrayList<Integer>(list_dz);
         finalCollect.addAll(1, collection);
         list_dz.addAll(1, collection);
-        Assert.assertEquals(list_dz, finalCollect);
+        Assert.assertEquals(finalCollect, list_dz);
     }
 
     @Test
@@ -77,7 +77,7 @@ public class MyArrayList_Test {
         List finalCollect = new ArrayList<Integer>(list_dz);
         finalCollect.remove(2);
         list_dz.remove(2);
-        Assert.assertEquals(list_dz, finalCollect);
+        Assert.assertEquals(finalCollect, list_dz);
     }
 
     @Test
@@ -85,7 +85,7 @@ public class MyArrayList_Test {
         List finalCollect = new ArrayList<Integer>(list_dz);
         finalCollect.removeAll(collection);
         list_dz.removeAll(collection);
-        Assert.assertEquals(list_dz, finalCollect);
+        Assert.assertEquals(finalCollect, list_dz);
     }
 
     @Test
@@ -93,13 +93,13 @@ public class MyArrayList_Test {
         List finalCollect = new ArrayList<Integer>(list_dz);
         finalCollect.clear();
         list_dz.clear();
-        Assert.assertEquals(list_dz, finalCollect);
+        Assert.assertEquals(finalCollect, list_dz);
     }
 
     @Test
     public void iterator_hasNext() {
         Iterator iterator = list_dz.iterator();
-        Assert.assertEquals(iterator.hasNext(), true);
+        Assert.assertEquals(true, iterator.hasNext());
     }
 
     @Test

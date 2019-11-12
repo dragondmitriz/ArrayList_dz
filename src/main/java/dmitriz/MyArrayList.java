@@ -80,9 +80,9 @@ public class MyArrayList<T> extends AbstractList<T> implements Iterable<T> {
     @Override
     public boolean addAll(Collection<? extends T> collection) {
         validationSize(size + collection.size());
-        for (T item : collection) {
-            array[size++] = item;
-        }
+        Object[] arr_collect = collection.toArray();
+        System.arraycopy(arr_collect, 0, array, size, arr_collect.length);
+        size += arr_collect.length;
         return true;
     }
 
@@ -90,10 +90,9 @@ public class MyArrayList<T> extends AbstractList<T> implements Iterable<T> {
     public boolean addAll(int index, Collection<? extends T> collection) {
         validationSize(size + collection.size());
         System.arraycopy(array, index, array, index + collection.size(), size - index);
-        for (T item : collection) {
-            array[index++] = item;
-            size++;
-        }
+        Object[] arr_collect = collection.toArray();
+        System.arraycopy(arr_collect, 0, array, index, arr_collect.length);
+        size += arr_collect.length;
         return true;
     }
 
@@ -128,7 +127,6 @@ public class MyArrayList<T> extends AbstractList<T> implements Iterable<T> {
         for (int i = 0; i < size; i++) {
             array[i] = null;
         }
-        array = new Object[0];
         size = 0;
     }
 
