@@ -104,16 +104,17 @@ public class MyArrayList<T> extends AbstractList<T> implements Iterable<T> {
     @Override
     public boolean removeAll(Collection<?> collection) {
         Object[] arrCollection = collection.toArray();
-        int count = collection.size();
+        boolean removeEvent = false;
         for (int i = 0; i < this.size; i++) {
-            for (Object item : collection) {
+            for (Object item : arrCollection) {
                 if (item.equals(this.array[i])) {
                     remove(i--);
+                    removeEvent = true;
                     break;
                 }
             }
         }
-        return true;
+        return removeEvent;
     }
 
     @Override
@@ -134,17 +135,17 @@ public class MyArrayList<T> extends AbstractList<T> implements Iterable<T> {
         int cursor;
 
         MyIterator() {
-            this.cursor = 0;
         }
 
         @Override
         public boolean hasNext() {
-            return this.cursor < MyArrayList.this.size;
+            return cursor < size;
         }
 
         @Override
         public T next() {
-            return (T) MyArrayList.this.array[this.cursor++];
+            if (this.hasNext()) return (T) MyArrayList.this.array[this.cursor++];
+            else return null;
         }
 
         @Override
