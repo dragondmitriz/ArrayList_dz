@@ -1,5 +1,7 @@
 package dmitriz;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.*;
 
 /**
@@ -7,15 +9,14 @@ import java.util.*;
  */
 public class MyArrayList<T> extends AbstractList<T> implements Iterable<T> {
 
-    private int size = 0;//размерность коллекции
+    private int size;//размерность коллекции
 
-    Object array[];//рабочий массив коллекции
+    private Object[] array;//рабочий массив коллекции
 
-    private boolean validationSize(int next_size) {
+    private void validationSize(int next_size) {
         if (next_size >= array.length) {
             resize(next_size);
         }
-        return true;
     }
 
     private void resize(int next_size) {
@@ -47,8 +48,6 @@ public class MyArrayList<T> extends AbstractList<T> implements Iterable<T> {
     public T set(int index, T element) {
         if (index > size) {
             throw new ArrayIndexOutOfBoundsException();
-        } else if (index == size) {
-            validationSize(size + 1);
         }
         T oldElement = get(index);
         array[index] = element;
@@ -134,22 +133,23 @@ public class MyArrayList<T> extends AbstractList<T> implements Iterable<T> {
     }
 
     //Iterable и своя реализация итератора
+    @NotNull
     @Override
     public Iterator<T> iterator() {
-        return new Iterator_dz();
+        return new MyIterator<>();
     }
 
-    private class Iterator_dz<T> implements Iterator<T> {
+    private class MyIterator<T> implements Iterator<T> {
 
         int cursor;
 
-        public Iterator_dz() {
+        MyIterator() {
             cursor = 0;
         }
 
         @Override
         public boolean hasNext() {
-            return cursor != size;
+            return cursor < size;
         }
 
         @Override
