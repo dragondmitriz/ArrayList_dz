@@ -10,8 +10,6 @@ import java.util.LinkedList;
 import java.util.Iterator;
 import java.util.List;
 
-import static org.junit.Assert.*;
-
 public class MyLinkedListTest {
 
     private MyLinkedList list_dz;
@@ -98,7 +96,7 @@ public class MyLinkedListTest {
     @Test
     public void iterator_hasNext() {
         Iterator iterator = list_dz.iterator();
-        Assert.assertEquals(true, iterator.hasNext());
+        Assert.assertTrue(iterator.hasNext());
     }
 
     @Test

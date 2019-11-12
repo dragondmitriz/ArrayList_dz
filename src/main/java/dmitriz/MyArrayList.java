@@ -126,11 +126,11 @@ public class MyArrayList<T> extends AbstractList<T> implements Iterable<T> {
 
     @NotNull
     @Override
-    public Iterator<T> iterator() {
-        return new MyIterator<>();
+    public Iterator iterator() {
+        return new MyIterator();
     }
 
-    private class MyIterator<T> implements Iterator<T> {
+    private class MyIterator implements Iterator<T> {
 
         int cursor;
 

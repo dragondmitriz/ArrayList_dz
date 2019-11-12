@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class MyArrayList_Test {
+public class MyArrayListTest {
 
     private MyArrayList list_dz;
     private ArrayList origin;
@@ -99,7 +99,7 @@ public class MyArrayList_Test {
     @Test
     public void iterator_hasNext() {
         Iterator iterator = list_dz.iterator();
-        Assert.assertEquals(true, iterator.hasNext());
+        Assert.assertTrue(iterator.hasNext());
     }
 
     @Test
