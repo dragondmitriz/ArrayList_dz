@@ -37,19 +37,17 @@ public class MyLinkedList<T> extends AbstractList<T> implements Iterable<T>, Lis
     public T set(int index, T element) {
         if (index + 1 > size) throw new ArrayIndexOutOfBoundsException();
         Node<T> node = getNode(index);
-        T old_data = node.data;
+        T oldData = node.data;
         node.data = element;
-        return old_data;
+        return oldData;
 
     }
 
-    //вернуть количество элементов коллекции
     @Override
     public int size() {
         return size;
     }
 
-    //добавить элемент в струкутуру данных
     @Override
     public boolean add(T element) {
         Node<T> node = new Node<T>(element, null, last);
@@ -81,7 +79,6 @@ public class MyLinkedList<T> extends AbstractList<T> implements Iterable<T>, Lis
         size++;
     }
 
-    //добавить все элементы любой коллекции
     @Override
     public boolean addAll(Collection<? extends T> collection) {
         for (T item : collection) {
@@ -99,31 +96,29 @@ public class MyLinkedList<T> extends AbstractList<T> implements Iterable<T>, Lis
         return true;
     }
 
-    //удалить элемент из структуры данных
     @Override
     public T remove(int index) {
         if (index + 1 > size) throw new ArrayIndexOutOfBoundsException();
-        Node<T> rm_element = getNode(index);
-        T rm_data = rm_element.data;
-        if (rm_element == last) {
-            rm_element.prev.next = null;
-            last = rm_element.prev;
-        } else if (rm_element == first) {
-            rm_element.next.prev = null;
-            first = rm_element.next;
+        Node<T> rmElement = getNode(index);
+        T rmData = rmElement.data;
+        if (rmElement == last) {
+            rmElement.prev.next = null;
+            last = rmElement.prev;
+        } else if (rmElement == first) {
+            rmElement.next.prev = null;
+            first = rmElement.next;
         } else {
-            rm_element.prev.next = rm_element.next;
-            rm_element.next.prev = rm_element.prev;
+            rmElement.prev.next = rmElement.next;
+            rmElement.next.prev = rmElement.prev;
         }
-        rm_element = null;
+        rmElement = null;
         size--;
-        return rm_data;
+        return rmData;
     }
 
-    //удалить все элементы указанной коллекции
     @Override
     public boolean removeAll(Collection<?> collection) {
-        Object[] arr_collection = collection.toArray();
+        Object[] arrCollection = collection.toArray();
         Node<T> node = first;
 
         for (int i = 0; i < size; i++) {
@@ -162,7 +157,6 @@ public class MyLinkedList<T> extends AbstractList<T> implements Iterable<T>, Lis
         return true;
     }
 
-    //очистить коллекцию
     @Override
     public void clear() {
         Node<T> node = first;
@@ -173,7 +167,6 @@ public class MyLinkedList<T> extends AbstractList<T> implements Iterable<T>, Lis
         size = 0;
     }
 
-    //Iterable и своя реализация итератора
     @Override
     public Iterator<T> iterator() {
         return new MyLinkedList.MyIterator();
@@ -211,19 +204,19 @@ public class MyLinkedList<T> extends AbstractList<T> implements Iterable<T>, Lis
                 return;
             }
 
-            Node<T> rm_element = cursor;
-            if (rm_element.next == last) {
-                rm_element.prev.next = null;
-                last = rm_element.prev;
-            } else if (rm_element == first) {
-                rm_element.next.prev = null;
-                first = rm_element.next;
+            Node<T> rmElement = cursor;
+            if (rmElement.next == last) {
+                rmElement.prev.next = null;
+                last = rmElement.prev;
+            } else if (rmElement == first) {
+                rmElement.next.prev = null;
+                first = rmElement.next;
             } else {
-                rm_element.prev.next = rm_element.next;
-                rm_element.next.prev = rm_element.prev;
+                rmElement.prev.next = rmElement.next;
+                rmElement.next.prev = rmElement.prev;
             }
             cursor = cursor.next;
-            rm_element = null;
+            rmElement = null;
             size--;
         }
     }
