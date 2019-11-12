@@ -122,6 +122,7 @@ public class MyArrayList<T> extends AbstractList<T> implements Iterable<T> {
         for (int i = 0; i < this.size; i++) {
             this.array[i] = null;
         }
+        size = 0;
     }
 
     @NotNull

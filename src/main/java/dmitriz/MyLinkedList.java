@@ -100,10 +100,13 @@ public class MyLinkedList<T> extends AbstractList<T> implements Iterable<T> {
 
     @Override
     public T remove(int index) {
-        if (index + 1 > size) throw new ArrayIndexOutOfBoundsException();
+        if (index >= size) throw new ArrayIndexOutOfBoundsException();
         Node<T> rmElement = getNode(index);
         T rmData = rmElement.data;
-        if (rmElement == this.last) {
+        if ((rmElement == this.last) && (rmElement == this.first)) {
+            this.first = null;
+            this.last = null;
+        } else if (rmElement == this.last) {
             rmElement.prev.next = null;
             this.last = rmElement.prev;
         } else if (rmElement == this.first) {
@@ -122,15 +125,21 @@ public class MyLinkedList<T> extends AbstractList<T> implements Iterable<T> {
     public boolean removeAll(Collection<?> collection) {
         Object[] arrCollection = collection.toArray();
         Node<T> node = this.first;
+        boolean removeEvent = false;
 
         for (int i = 0; i < size; i++) {
 
-            for (Object item : collection) {
+            for (Object item : arrCollection) {
 
                 if (item.equals(node.data)) {
+                    removeEvent = true;
+
                     Node<T> rmNode = node;
 
-                    if (rmNode == this.first) {
+                    if ((rmNode == this.last) && (rmNode == this.first)) {
+                        this.first = null;
+                        this.last = null;
+                    } else if (rmNode == this.first) {
                         rmNode.next.prev = null;
                         this.first = rmNode.next;
                         i--;
@@ -156,7 +165,7 @@ public class MyLinkedList<T> extends AbstractList<T> implements Iterable<T> {
                 node = node.next;
             }
         }
-        return true;
+        return removeEvent;
     }
 
     @Override
@@ -178,25 +187,27 @@ public class MyLinkedList<T> extends AbstractList<T> implements Iterable<T> {
     private class MyIterator implements Iterator<T> {
 
         private Node cursor;
+        private int index;
 
         MyIterator() {
         }
 
         @Override
         public boolean hasNext() {
-            if (this.cursor == null) {
-                return MyLinkedList.this.first != null;
-            }
-            return this.cursor.next != null;
+            return this.index < size;
         }
 
         @Override
         public T next() {
-            if (this.cursor == null) {
-                this.cursor = MyLinkedList.this.first;
-                return (T) this.cursor.data;
+            if (!hasNext()) {
+                throw new NoSuchElementException();
             }
-            this.cursor = this.cursor.next;
+            if (this.cursor == null) {
+                this.cursor = first;
+            } else {
+                this.cursor = this.cursor.next;
+            }
+            index++;
             return (T) this.cursor.data;
         }
 
