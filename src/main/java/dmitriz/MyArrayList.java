@@ -145,7 +145,7 @@ public class MyArrayList<T> extends AbstractList<T> implements Iterable<T> {
         @Override
         public T next() {
             if (this.hasNext()) return (T) MyArrayList.this.array[this.cursor++];
-            else return null;
+            else throw new NoSuchElementException();
         }
 
         @Override
