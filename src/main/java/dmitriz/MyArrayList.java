@@ -13,106 +13,101 @@ public class MyArrayList<T> extends AbstractList<T> implements Iterable<T> {
 
     private Object[] array;//рабочий массив коллекции
 
-    private void validationSize(int next_size) {
-        if (next_size >= array.length) {
-            resize(next_size);
+    private void validationSize(int nextSize) {
+        if (nextSize >= array.length) {
+            resize(nextSize);
         }
     }
 
-    private void resize(int next_size) {
-        int new_size = size + size >> 1;
-        if (next_size > new_size) {
-            new_size = next_size;
+    private void resize(int nextSize) {
+        int newSize = this.size + this.size >> 1;
+        if (nextSize > newSize) {
+            newSize = nextSize;
         }
-        array = Arrays.copyOf(array, new_size);
+        this.array = Arrays.copyOf(this.array, newSize);
     }
 
     public MyArrayList() {
-        size = 0;
-        array = new Object[0];
+        this.size = 0;
+        this.array = new Object[0];
     }
 
     public MyArrayList(int length) {
-        size = length;
-        array = new Object[length];
+        this.size = length;
+        this.array = new Object[length];
     }
 
     @Override
     public T get(int index) {
-        if (index >= size) {
+        if (index >= this.size) {
             throw new ArrayIndexOutOfBoundsException();
         }
-        return (T) array[index];
+        return (T) this.array[index];
     }
 
     public T set(int index, T element) {
-        if (index > size) {
+        if (index > this.size) {
             throw new ArrayIndexOutOfBoundsException();
         }
         T oldElement = get(index);
-        array[index] = element;
+        this.array[index] = element;
         return oldElement;
     }
 
-    //вернуть количество элементов коллекции
     @Override
     public int size() {
-        return size;
+        return this.size;
     }
 
-    //добавить элемент в струкутуру данных
     @Override
     public boolean add(T element) {
-        validationSize(size + 1);
-        array[size++] = element;
+        validationSize(this.size + 1);
+        this.array[this.size++] = element;
         return true;
     }
 
     @Override
     public void add(int index, T element) {
-        validationSize(size + 1);
-        System.arraycopy(array, index, array, index + 1, size - index);
-        array[index] = element;
-        size++;
+        validationSize(this.size + 1);
+        System.arraycopy(this.array, index, this.array, index + 1, this.size - index);
+        this.array[index] = element;
+        this.size++;
     }
 
-    //добавить все элементы любой коллекции
     @Override
     public boolean addAll(Collection<? extends T> collection) {
-        validationSize(size + collection.size());
-        Object[] arr_collect = collection.toArray();
-        System.arraycopy(arr_collect, 0, array, size, arr_collect.length);
-        size += arr_collect.length;
+        validationSize(this.size + collection.size());
+        Object[] arrCollect = collection.toArray();
+        System.arraycopy(arrCollect, 0, this.array, this.size, arrCollect.length);
+        this.size += arrCollect.length;
         return true;
     }
 
     @Override
     public boolean addAll(int index, Collection<? extends T> collection) {
-        validationSize(size + collection.size());
-        System.arraycopy(array, index, array, index + collection.size(), size - index);
-        Object[] arr_collect = collection.toArray();
-        System.arraycopy(arr_collect, 0, array, index, arr_collect.length);
-        size += arr_collect.length;
+        validationSize(this.size + collection.size());
+        System.arraycopy(this.array, index, this.array, index + collection.size(), this.size - index);
+        Object[] arrCollect = collection.toArray();
+        System.arraycopy(arrCollect, 0, this.array, index, arrCollect.length);
+        this.size += arrCollect.length;
         return true;
     }
 
-    //удалить элемент из структуры данных
     @Override
     public T remove(int index) {
-        T remove_element = (T) array[index];
-        System.arraycopy(array, index + 1, array, index, size - index - 1);
-        size--;
-        return remove_element;
+        T removeElement = (T) this.array[index];
+        System.arraycopy(this.array, index + 1, this.array, index, this.size - index - 1);
+        this.size--;
+        return removeElement;
     }
 
-    //удалить все элементы указанной коллекции
     @Override
     public boolean removeAll(Collection<?> collection) {
-        Object[] arr_collection = collection.toArray();
+        Object[] arrCollection = collection.toArray();
         int count = collection.size();
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < this.size; i++) {
             for (Object item : collection) {
-                if (item.equals(array[i])) {
+                if (item.equals(this.array[i])) {
                     remove(i--);
                     break;
                 }
@@ -121,16 +116,13 @@ public class MyArrayList<T> extends AbstractList<T> implements Iterable<T> {
         return true;
     }
 
-    //очистить коллекцию
     @Override
     public void clear() {
-        for (int i = 0; i < size; i++) {
-            array[i] = null;
+        for (int i = 0; i < this.size; i++) {
+            this.array[i] = null;
         }
-        size = 0;
     }
 
-    //Iterable и своя реализация итератора
     @NotNull
     @Override
     public Iterator<T> iterator() {
@@ -142,22 +134,22 @@ public class MyArrayList<T> extends AbstractList<T> implements Iterable<T> {
         int cursor;
 
         MyIterator() {
-            cursor = 0;
+            this.cursor = 0;
         }
 
         @Override
         public boolean hasNext() {
-            return cursor < size;
+            return this.cursor < MyArrayList.this.size;
         }
 
         @Override
         public T next() {
-            return (T) array[cursor++];
+            return (T) MyArrayList.this.array[this.cursor++];
         }
 
         @Override
         public void remove() {
-            MyArrayList.this.remove(cursor - 1);
+            MyArrayList.this.remove(this.cursor - 1);
         }
     }
 }
