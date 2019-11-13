@@ -4,14 +4,24 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
-/**
- * Created by user on 08.11.2019.
- */
 public class MyArrayList<T> extends AbstractList<T> implements Iterable<T> {
 
-    private int size;//размерность коллекции
+    private int size;
 
-    private Object[] array;//рабочий массив коллекции
+    private Object[] array;
+
+    public MyArrayList() {
+        this.array = new Object[10];
+        this.size = 0;
+    }
+
+    public MyArrayList(int length) {
+        if (length < 0) {
+            throw new IllegalArgumentException("Illegal Size: " + length);
+        }
+        this.size = length;
+        this.array = new Object[length];
+    }
 
     private void validationSize(int nextSize) {
         if (nextSize >= array.length) {
@@ -27,28 +37,20 @@ public class MyArrayList<T> extends AbstractList<T> implements Iterable<T> {
         this.array = Arrays.copyOf(this.array, newSize);
     }
 
-    public MyArrayList() {
-        this.size = 0;
-        this.array = new Object[0];
-    }
-
-    public MyArrayList(int length) {
-        this.size = length;
-        this.array = new Object[length];
-    }
-
     @Override
     public T get(int index) {
-        if (index >= this.size) {
-            throw new ArrayIndexOutOfBoundsException();
-        }
+        if (index < 0) throw new IllegalArgumentException("Illegal Index: " + index);
+        if (index >= this.size)
+            throw new ArrayIndexOutOfBoundsException("Index out of bounds: " + index + " >  " + (size - 1));
+
         return (T) this.array[index];
     }
 
     public T set(int index, T element) {
-        if (index > this.size) {
-            throw new ArrayIndexOutOfBoundsException();
-        }
+        if (index < 0) throw new IllegalArgumentException("Illegal Index: " + index);
+        if (index >= this.size)
+            throw new ArrayIndexOutOfBoundsException("Index out of bounds: " + index + " >  " + (size - 1));
+
         T oldElement = get(index);
         this.array[index] = element;
         return oldElement;
@@ -68,6 +70,10 @@ public class MyArrayList<T> extends AbstractList<T> implements Iterable<T> {
 
     @Override
     public void add(int index, T element) {
+        if (index < 0) throw new IllegalArgumentException("Illegal Index: " + index);
+        if (index >= this.size)
+            throw new ArrayIndexOutOfBoundsException("Index out of bounds: " + index + " >  " + (size - 1));
+
         validationSize(this.size + 1);
         System.arraycopy(this.array, index, this.array, index + 1, this.size - index);
         this.array[index] = element;
@@ -85,6 +91,10 @@ public class MyArrayList<T> extends AbstractList<T> implements Iterable<T> {
 
     @Override
     public boolean addAll(int index, Collection<? extends T> collection) {
+        if (index < 0) throw new IllegalArgumentException("Illegal Index: " + index);
+        if (index >= this.size)
+            throw new ArrayIndexOutOfBoundsException("Index out of bounds: " + index + " >  " + (size - 1));
+
         validationSize(this.size + collection.size());
         System.arraycopy(this.array, index, this.array, index + collection.size(), this.size - index);
         Object[] arrCollect = collection.toArray();
@@ -95,6 +105,10 @@ public class MyArrayList<T> extends AbstractList<T> implements Iterable<T> {
 
     @Override
     public T remove(int index) {
+        if (index < 0) throw new IllegalArgumentException("Illegal Index: " + index);
+        if (index >= this.size)
+            throw new ArrayIndexOutOfBoundsException("Index out of bounds: " + index + " >  " + (size - 1));
+
         T removeElement = (T) this.array[index];
         System.arraycopy(this.array, index + 1, this.array, index, this.size - index - 1);
         this.size--;
