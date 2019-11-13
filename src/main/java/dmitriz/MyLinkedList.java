@@ -59,7 +59,7 @@ public class MyLinkedList<T> extends AbstractList<T> implements Iterable<T> {
 
     @Override
     public boolean add(T element) {
-        Node<T> node = new Node<T>(element, null, this.last);
+        Node<T> node = new Node<>(element, null, this.last);
         if (this.last == null) {
             this.first = node;
             this.last = node;
@@ -79,12 +79,12 @@ public class MyLinkedList<T> extends AbstractList<T> implements Iterable<T> {
 
         Node<T> nextNode = getNode(index);
         if (nextNode == this.first) {
-            Node<T> node = new Node<T>(element, nextNode, null);
+            Node<T> node = new Node<>(element, nextNode, null);
             this.first = node;
             nextNode.prev = node;
         } else {
             Node<T> prevNode = nextNode.prev;
-            Node<T> node = new Node<T>(element, nextNode, prevNode);
+            Node<T> node = new Node<>(element, nextNode, prevNode);
             prevNode.next = node;
             nextNode.prev = node;
         }
