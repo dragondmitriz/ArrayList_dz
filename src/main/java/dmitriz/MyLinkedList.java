@@ -20,7 +20,8 @@ public class MyLinkedList<T> extends AbstractList<T> implements Iterable<T> {
     }
 
     private Node<T> getNode(int index) {
-        if (this.first == null) throw new ArrayIndexOutOfBoundsException();
+        if (this.first == null) throw new NullPointerException("Collection is empty");
+
         Node<T> node = this.first;
         while ((index > 0) && (node.next != null)) {
             node = node.next;
@@ -31,13 +32,19 @@ public class MyLinkedList<T> extends AbstractList<T> implements Iterable<T> {
 
     @Override
     public T get(int index) {
-        if (index + 1 > size) throw new ArrayIndexOutOfBoundsException();
+        if (index < 0) throw new IllegalArgumentException("Illegal Index: " + index);
+        if (index >= this.size)
+            throw new ArrayIndexOutOfBoundsException("Index out of bounds: " + index + " >  " + (size - 1));
+
         Node<T> node = getNode(index);
         return node.data;
     }
 
     public T set(int index, T element) {
-        if (index + 1 > size) throw new ArrayIndexOutOfBoundsException();
+        if (index < 0) throw new IllegalArgumentException("Illegal Index: " + index);
+        if (index >= this.size)
+            throw new ArrayIndexOutOfBoundsException("Index out of bounds: " + index + " >  " + (size - 1));
+
         Node<T> node = getNode(index);
         T oldData = node.data;
         node.data = element;
@@ -66,7 +73,10 @@ public class MyLinkedList<T> extends AbstractList<T> implements Iterable<T> {
 
     @Override
     public void add(int index, T element) {
-        if ((index + 1 > size)) throw new ArrayIndexOutOfBoundsException();
+        if (index < 0) throw new IllegalArgumentException("Illegal Index: " + index);
+        if (index >= this.size)
+            throw new ArrayIndexOutOfBoundsException("Index out of bounds: " + index + " >  " + (size - 1));
+
         Node<T> nextNode = getNode(index);
         if (nextNode == this.first) {
             Node<T> node = new Node<T>(element, nextNode, null);
@@ -91,7 +101,10 @@ public class MyLinkedList<T> extends AbstractList<T> implements Iterable<T> {
 
     @Override
     public boolean addAll(int index, @NotNull Collection<? extends T> collection) {
-        if (index + 1 > size) throw new ArrayIndexOutOfBoundsException();
+        if (index < 0) throw new IllegalArgumentException("Illegal Index: " + index);
+        if (index >= this.size)
+            throw new ArrayIndexOutOfBoundsException("Index out of bounds: " + index + " >  " + (size - 1));
+
         for (T item : collection) {
             add(index++, item);
         }
@@ -100,7 +113,10 @@ public class MyLinkedList<T> extends AbstractList<T> implements Iterable<T> {
 
     @Override
     public T remove(int index) {
-        if (index >= size) throw new ArrayIndexOutOfBoundsException();
+        if (index < 0) throw new IllegalArgumentException("Illegal Index: " + index);
+        if (index >= this.size)
+            throw new ArrayIndexOutOfBoundsException("Index out of bounds: " + index + " >  " + (size - 1));
+
         Node<T> rmElement = getNode(index);
         T rmData = rmElement.data;
         if ((rmElement == this.last) && (rmElement == this.first)) {
