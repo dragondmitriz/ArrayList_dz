@@ -6,11 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="MyLists" />
+        <module name="ArrayList_dz" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="MyLists" target="8" />
+      <module name="ArrayList_dz" target="8" />
     </bytecodeTargetLevel>
   </component>
 </project>
